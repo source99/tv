@@ -1,0 +1,33 @@
+<?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$show = $_GET["show"];
+$tvdb_apikey = "F6F68F91579731E2";
+$xml_url = "http://www.thetvdb.com/api/F6F68F91579731E2/languages.xml";
+$languages = simplexml_load_file($xml_url);
+$count = -99;
+$count = count($languages);
+?>
+
+<html>
+    <head>
+        <title>series premiere of <?= "$show" ?> </title>
+    </head>
+    <body>
+        <h1>Series premiere of <?= "$show" ?> </h1>
+        <p>xml url = <?= $xml_url ?> </p>
+        <p>results of language grab</p>
+        <?= "$languages" ?>
+        <? foreach ($languages->Language as $lang) :
+            print "lang = $lang->name<br>";  
+        endforeach;
+        ?>
+        <p>end results of language grab</p>
+        <p>size of language grab = <?= $count ?></p>
+        
+    </body>
+</html>
