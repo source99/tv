@@ -1,0 +1,31 @@
+Select series
+SELECT `SeriesName`, `id` FROM `tvseries` WHERE `SeriesName` like '%buffy the vampire slayer%'
+SELECT * FROM `tvseries` WHERE `SeriesName` like '%shark tank%'
+
+Select seasons
+SELECT  `id` ,  `seriesid` FROM  `tvseasons` WHERE  `seriesid` =70327
+
+Select episodes
+SELECT * FROM `tvepisodes` WHERE `seasonid` = 10
+
+SELECT `tvseries.SeriesName`, `tvseason.season`, `tvepisodes.episodenumber`, `tvepisodes.Overview` FROM `tvseries`, `tvseasons`, `tvepisodes` WHERE `tvseries`.`id`=`tvseasons`.`seriesid` AND `tvseasons`.`id`=`tvepisodes`.`seasonid`
+
+
+SELECT  `tvseries.SeriesName` ,  `tvseasons.season` ,  `tvepisodes.episodenumber` ,  `tvepisodes.Overview` 
+FROM  `tvseries`,  `tvseasons`,  `tvepisodes` 
+WHERE  `tvseries`.`id` =  `tvseasons`.`seriesid` 
+AND  `tvseasons`.`id` =  `tvepisodes`.`seasonid` 
+AND `tvseries`.`SeriesName` like '%shark tank%'
+
+
+SELECT `tvseries`.`SeriesName`, `tvseasons`.`season`, `tvepisodes`.`episodenumber`, `tvepisodes`.`Overview` FROM `tvseries`, `tvseasons`, `tvepisodes` WHERE `tvseries`.`id`=`tvseasons`.`seriesid` AND `tvseasons`.`id`=`tvepisodes`.`seasonid` AND `tvseries`.`SeriesName` like '%shark tank%'
+
+
+SELECT  `tvepisodes`.`firstaired`, `tvseries`.`SeriesName` ,  `tvseasons`.`season` ,  `tvepisodes`.`episodenumber` ,  `tvepisodes`.`Overview` 
+FROM  `tvseries` ,  `tvseasons` ,  `tvepisodes` 
+WHERE  `tvseries`.`id` =  `tvseasons`.`seriesid` 
+AND  `tvseasons`.`id` =  `tvepisodes`.`seasonid` 
+AND  `tvseries`.`SeriesName` LIKE  '%big bang theory%'
+ORDER BY `tvepisodes`.`firstaired` DESC
+LIMIT 0 , 3
+
