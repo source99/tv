@@ -29,3 +29,113 @@ AND  `tvseries`.`SeriesName` LIKE  '%big bang theory%'
 ORDER BY `tvepisodes`.`firstaired` DESC
 LIMIT 0 , 3
 
+
+epoch time for June 16, 2012 = 1339804800
+
+http://www.thetvdb.com/api/Updates.php?type=all&time=1339804800
+
+70327
+<mirrorpath_xml>/api/<apikey>/series/<seriesid>/<language>.xml.
+
+api key = F6F68F91579731E2
+
+http://www.thetvdb.com/api/F6F68F91579731E2/series/70327/en.xml
+
+UPDATE `tvseries` SET `tvseries`.`Actors`='matt rosenthal' WHERE `tvseries`.`id`=70327
+
+
+
+id, 
+Actors,
+Airs_DayOfWeek, tvseries.Airs_DayOfWeek
+Airs_Time, tvseries.Airs_Time
+ContentRating,
+FirstAired, tvseries.FirstAired
+Genre,
+IMDB_ID,
+Language,
+Network, tvseries.Network
+NetworkID,
+Overview, tvseries.Overview
+Rating,
+RatingCount,
+Runtime,
+SeriesID,
+SeriesName, tvseries.SeriesName
+Status, tvseries.status
+added,
+addedBy,
+banner,
+fanart,
+lastupdated,
+poster,
+zap2it_id,
+
+
+// tvdb.tvseries
+$tvseries = array(
+  array(
+        'id'=>70328,
+        'SeriesName'=>'The Young and the Restless',
+        'SeriesID'=>100,'Status'=>'Continuing',
+        'FirstAired'=>'1973-03-01','Network'=>'CBS', 
+        'NetworkID'=>null,
+        'Runtime'=>60,
+        'Genre'=>'|Soap|',
+        'Actors'=>'|Andrea Evans|Christel Khalil|Kristoff St. John|Alexis Thorpe|Eva Longoria|Patty Weaver|Carlos Bernard|Joshua Morrow|Deidre Hall|Josh Taylor|Lauren Woodland|Victoria Rowell|Jess Walton|Ashley Jones|Tracey Bregman|Eileen Davidson|Christian LeBlanc|Heather',
+        'Overview'=>null,
+        'bannerrequest'=>0,
+        'lastupdated'=>1335535694,
+        'Airs_DayOfWeek'=>'Daily',
+        'Airs_Time'=>'12:30 PM',
+        'Rating'=>null,'flagged'=>0,
+        'forceupdate'=>0,'hits'=>2078,
+        'updateID'=>0,
+        'requestcomment'=>'',
+        'locked'=>'no',
+        'mirrorupdate'=>'2012-04-27 07:08:14',
+        'lockedby'=>0,
+        'autoimport'=>null,
+        'disabled'=>'No',
+        'IMDB_ID'=>'tt0069658',
+        'zap2it_id'=>'EP00004422',
+        'added'=>null,
+        'addedBy'=>null
+       )
+
+
+
+
+<Data>
+<Series>
+<id>70327</id>
+<Actors>
+|Sarah Michelle Gellar|Nicholas Brendon|Alyson Hannigan|Emma Caulfield|Michelle Trachtenberg|Anthony Head|James Marsters|Juliet Landau|Seth Green|David Boreanaz|Amber Benson|Marc Blucas|Kristine Sutherland|Eliza Dushku|Charisma Carpenter|Danny Strong|Nathan Fillion|
+</Actors>
+<Airs_DayOfWeek/>
+<Airs_Time/>
+<ContentRating>TV-PG</ContentRating>
+<FirstAired>1997-03-10</FirstAired>
+<Genre>|Action and Adventure|Comedy|Drama|Fantasy|</Genre>
+<IMDB_ID>tt0118276</IMDB_ID>
+<Language>en</Language>
+<Network>The WB</Network>
+<NetworkID/>
+<Overview>
+In every generation there is a Chosen One. She alone will stand against the vampires, the demons and the forces of darkness. She is the Slayer. Sarah Michelle Gellar stars as Buffy Summers, The Chosen One, the one girl in all the world with the strength and skill to fight the vampires. With the help of her close friends, Willow (Alyson Hannigan ), Xander (Nicholas Brendon), and her Watcher Giles (Anthony Stewart Head) she balances slaying, family, friendships, and relationships.
+</Overview>
+<Rating>9.0</Rating>
+<RatingCount>110</RatingCount>
+<Runtime>60</Runtime>
+<SeriesID>10</SeriesID>
+<SeriesName>Buffy the Vampire Slayer</SeriesName>
+<Status>Ended</Status>
+<added/>
+<addedBy/>
+<banner>graphical/70327-g24.jpg</banner>
+<fanart>fanart/original/70327-3.jpg</fanart>
+<lastupdated>1348511515</lastupdated>
+<poster>posters/70327-10.jpg</poster>
+<zap2it_id>EP00213110</zap2it_id>
+</Series>
+</Data>
