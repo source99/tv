@@ -25,7 +25,7 @@ SELECT  `tvepisodes`.`firstaired`, `tvseries`.`SeriesName` ,  `tvseasons`.`seaso
 FROM  `tvseries` ,  `tvseasons` ,  `tvepisodes` 
 WHERE  `tvseries`.`id` =  `tvseasons`.`seriesid` 
 AND  `tvseasons`.`id` =  `tvepisodes`.`seasonid` 
-AND  `tvseries`.`SeriesName` LIKE  '%big bang theory%'
+AND  `tvseries`.`SeriesName` LIKE  '%Shark Tank%'
 ORDER BY `tvepisodes`.`firstaired` DESC
 LIMIT 0 , 3
 
@@ -139,3 +139,115 @@ In every generation there is a Chosen One. She alone will stand against the vamp
 <zap2it_id>EP00213110</zap2it_id>
 </Series>
 </Data>
+
+
+
+
+EPISODES
+
+1134
+
+<mirrorpath_xml>/api/<apikey>/episodes/<episodeid>/<language>.xml.
+
+http://www.thetvdb.com/api/F6F68F91579731E2/episodes/1134/en.xml
+http://www.thetvdb.com/api/F6F68F91579731E2/episodes/17368/en.xml
+
+
+<Data>
+<Episode>
+<id>1134</id>
+<seasonid>28</seasonid>
+<EpisodeNumber>19</EpisodeNumber>
+<EpisodeName>Failure to Communicate</EpisodeName>
+<FirstAired>2002-02-22</FirstAired>
+<GuestStars>
+|Charles Robinson|Denise Nicholas|Starling Victorian|
+</GuestStars>
+<Director>|Leonard R. Garner Jr.|</Director>
+<Writer>|Don Reo|Damon Wayans|</Writer>
+<Overview>
+Michael's parents come to visit him, but Michael is worried about the way they treat each other and how that is reflecting on his own children. After a disastrous attempt to fix things, Michael and Jay finally decide to let things the way they were. Meanwhile, Jay and Michael worry about Jr.'s rush to have sex and his new girlfriend. Note: This episode was originally intended to air in season one, but for unknown reasons, ABC pulled back to season 2 Episode 19. Which is why Jazz Raycole portrays Claire, making this episode her very final appearance in the series .
+</Overview>
+<ProductionCode>W706</ProductionCode>
+<lastupdated>1342751498</lastupdated>
+<flagged>0</flagged>
+<DVD_discid/>
+<DVD_season/>
+<DVD_episodenumber/>
+<DVD_chapter/>
+<absolute_number/>
+<filename>episodes/70329/1134.jpg</filename>
+<seriesid>70329</seriesid>
+<mirrorupdate>2012-07-19 19:31:14</mirrorupdate>
+<IMDB_ID/>
+<EpImgFlag>2</EpImgFlag>
+<Rating>10</Rating>
+<SeasonNumber>2</SeasonNumber>
+<Language>en</Language>
+</Episode>
+</Data>
+
+
+
+check if season and seriesid exists.  insert if not
+
+$sql_string = sprintf("SELECT 1 FROM `tvseasons` WHERE `id`=%s","$series_id");
+
+// tvdb.tvseasons
+$tvseasons = array(
+  array(
+'id'=>10,
+'seriesid'=>70327,
+'season'=>1,
+'bannerrequest'=>0,
+'locked'=>'no',
+'mirrorupdate'=>'2008-09-08 15:50:24',
+'lockedby'=>0)
+);
+
+check if episode exists, insert if not, update if it exists
+
+// tvdb.tvepisodes
+$tvepisodes = array(
+  array(
+'id'=>2,
+'seasonid'=>10,
+'EpisodeNumber'=>1,
+'EpisodeName'=>'Welcome to the Hellmouth (1)',
+'FirstAired'=>'1997-03-10',
+'GuestStars'=>'Persia White|Tupelo Jereme|Natalie Strauss|Brian Thompson|Ken Lerner|J. Patrick Lawlor|Eric Balfour|Deborah Brown|Carmine Giovinazzo|Amy Faith Chance|Julie Benz|Marc Metcalf|Kristine Sutherland|David Boreanaz',
+'Director'=>'Charles Martin Smith',
+'Writer'=>'Joss Whedon',
+'Overview'=>'Determined for a fresh start, Buffy Summers moves to Sunnydale only to find out that it\'s located on a Hellmouth and that her slaying duties have just begun.',
+'ProductionCode'=>'4V01',
+'ShowURL'=>null,
+'lastupdated'=>1316892392,
+'flagged'=>0,
+'DVD_discid'=>null,
+'DVD_season'=>1,
+'DVD_episodenumber'=>1.0,
+'DVD_chapter'=>null,
+'locked'=>'no',
+'absolute_number'=>1,
+'filename'=>'episodes/70327/2.jpg',
+'seriesid'=>70327,
+'lastupdatedby'=>20141,
+'airsafter_season'=>null,
+'airsbefore_season'=>null,
+'airsbefore_episode'=>null,
+'thumb_author'=>1,
+'mirrorupdate'=>'2011-09-24 12:26:34',
+'lockedby'=>0,
+'IMDB_ID'=>'tt0452716',
+'EpImgFlag'=>null)
+);
+
+
+
+/api/<apikey>/updates/yyyy-mm-dd.xml
+http://www.thetvdb.com/api/F6F68F91579731E2/updates/2012-06-01.xml
+
+UPDATE `tvseries` SET `tvseries`.`actors`="|Sarah Michelle Gellar|Nicholas Brendon|Alyson Hannigan|Emma Caulfield|Michelle Trachtenberg|Anthony Head|James Marsters|Juliet Landau|Seth Green|David Boreanaz|Amber Benson|Marc Blucas|Kristine Sutherland|Eliza Dushku|Charisma Carpenter|Danny Strong|Nathan Fillion|", `tvseries`.`Airs_DayOfWeek` = "", `tvseries`.`FirstAired` = "1997-03-10", `tvseries`.`Genre` = "|Action and Adventure|Comedy|Drama|Fantasy|", `tvseries`.`IMDB_DB` = "tt0118276", `tvseries`.`Network` = "The WB", `tvseries`.`Overview` = "In every generation there is a Chosen One. She alone will stand against the vampires, the demons and the forces of darkness. She is the Slayer. Sarah Michelle Gellar stars as Buffy Summers, The Chosen One, the one girl in all the world with the strength and skill to fight the vampires. With the help of her close friends, Willow (Alyson Hannigan ), Xander (Nicholas Brendon), and her Watcher Giles (Anthony Stewart Head) she balances slaying, family, friendships, and relationships.", `tvseries`.`Runtime` = "60", `tvseries`.`SeriesID` = 10, `tvseries`.`SeriesName` = "Buffy the Vampire Slayer", `tvseries`.`added` = "", `tvseries`.`lastupdated` = 1348511515, `tvseries`.`Airs_Time` = "", `tvseries`.`Network` = "The WB", `tvseries`.`Status` = "Ended" WHERE `tvseries`.`id`=70327
+
+
+INSERT INTO `tvdb`.`tvepisodes` ( `id`, `seasonid`, `EpisodeNumber`, `EpisodeName`, `FirstAired`, `GuestStars`, `Director`, `Writer`, `Overview`, `ProductionCode`, `lastupdated`, `flagged`, `seriesid`, `IMDB_ID` ) VALUES ( 1134, 28, 19, "Failure to Communicate", "2002-02-22", "|Charles Robinson|Denise Nicholas|Starling Victorian|", "|Leonard R. Garner Jr.|", "|Don Reo|Damon Wayans|", "Michael's parents come to visit him, but Michael is worried about the way they treat each other and how that is reflecting on his own children. After a disastrous attempt to fix things, Michael and Jay finally decide to let things the way they were. Meanwhile, Jay and Michael worry about Jr.'s rush to have sex and his new girlfriend. Note: This episode was originally intended to air in season one, but for unknown reasons, ABC pulled back to season 2 Episode 19. Which is why Jazz Raycole portrays Claire, making this episode her very final appearance in the series . ", "W706", "1342751498", "0", 70329, "" )19", "Failure to Communicate", "2002-02-22", "|Charles Robinson|Denise Nicholas|Starling Victorian|", "|Leonard R. Garner Jr.|", "|Don Reo|Damon Wayans|", "Michael's parents come to visit him, but Michael is worried about the way they treat each other and how that is reflecting on his own children. After a disastrous attempt to fix things, Michael and Jay finally decide to let things the way they were. Meanwhile, Jay and Michael worry about Jr.'s rush to have sex and his new girlfriend. Note: This episode was originally intended to air in season one, but for unknown reasons, ABC pulled back to season 2 Episode 19. Which is why Jazz Raycole portrays Claire, making this episode her very final appearance in the series . ", "W706", "1342751498", "0", "", "" )

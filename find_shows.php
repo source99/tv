@@ -19,7 +19,19 @@ if ($mysqli->connect_error) {
 }
 
 
-$sql_query = sprintf("SELECT `SeriesName` FROM `tvseries` WHERE `SeriesName` like '%%%s%%'",$search_string);
+//$sql_query = sprintf("SELECT `SeriesName`, `id` FROM `tvseries` WHERE `SeriesName` like '%%%s%%'",$search_string);
+//$sql_join_query = sprintf("SELECT `SeriesName.id`, `tvseasons.season`, WHERE `SeriesName` like '%%%s%%', Seriesname");
+
+$sql_query = sprintf("SELECT  `tvepisodes`.`firstaired`, `tvseries`.`SeriesName` ,  `tvseasons`.`season` ,  `tvepisodes`.`episodenumber` ,  `tvepisodes`.`Overview` 
+FROM  `tvseries` ,  `tvseasons` ,  `tvepisodes` 
+WHERE  `tvseries`.`id` =  `tvseasons`.`seriesid` 
+AND  `tvseasons`.`id` =  `tvepisodes`.`seasonid` 
+AND  `tvseries`.`SeriesName` LIKE  '%%%s%%'
+ORDER BY `tvepisodes`.`firstaired` DESC
+LIMIT 0 , 3", $search_string);
+
+
+
 $result = $mysqli->query($sql_query);
 
 
@@ -31,22 +43,18 @@ $result = $mysqli->query($sql_query);
         <title>looking for a show in MySQL DB</title>
     </head>
     <body>
-        <p>setup:</p>
-        <p>database address = <?=$db_host ?> </p>
-        <p>database username = <?=$db_username ?></p>
-        <p>database password = <?= $db_password ?></p>
-        <p>database = <?= $db_name ?></p>
         <p>Looking for the string "<?= $search_string ?>" in tv database </p>
         
-        <? echo  'Successfully logged into db... ' . $mysqli->host_info . "\n" ?>;
-        
         <p>SQL query = <?= $sql_query ?></p>
-        <p>size of query return is <?= $result->num_rows ?></p>
-        <p>return of query is </p>
+        <p>upcoming episodes </p>
         <p>
             <?  
                 while ($row = $result->fetch_assoc()) {
-                    echo $row['SeriesName'] . "<br>";
+                    echo $row['SeriesName'];
+                    print " ";
+                    echo $row['firstaired'];
+                    print "</br>";
+                    //echo $row['SeriesName'] $row['firstaired'];
                     }
             ?>
         </p>
