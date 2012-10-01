@@ -26,6 +26,7 @@ $sql_query = sprintf("SELECT  `tvepisodes`.`firstaired`, `tvseries`.`SeriesName`
 FROM  `tvseries` ,  `tvseasons` ,  `tvepisodes` 
 WHERE  `tvseries`.`id` =  `tvseasons`.`seriesid` 
 AND  `tvseasons`.`id` =  `tvepisodes`.`seasonid` 
+AND  `tvepisodes`.`EpisodeNumber` = 1 
 AND  `tvseries`.`SeriesName` LIKE  '%%%s%%'
 ORDER BY `tvepisodes`.`firstaired` DESC
 LIMIT 0 , 3", $search_string);
@@ -53,7 +54,13 @@ $result = $mysqli->query($sql_query);
                     echo $row['SeriesName'];
                     print " ";
                     echo $row['firstaired'];
-                    print "</br>";
+                    print " - season ";
+                    echo $row['season'];
+                    print " episode ";
+                    echo $row['episodenumber'];
+                    echo "</br>overview - ";
+                    echo $row['Overview'];
+                    print "</br></br>";
                     //echo $row['SeriesName'] $row['firstaired'];
                     }
             ?>
