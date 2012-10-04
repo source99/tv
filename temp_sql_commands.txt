@@ -251,3 +251,61 @@ UPDATE `tvseries` SET `tvseries`.`actors`="|Sarah Michelle Gellar|Nicholas Brend
 
 
 INSERT INTO `tvdb`.`tvepisodes` ( `id`, `seasonid`, `EpisodeNumber`, `EpisodeName`, `FirstAired`, `GuestStars`, `Director`, `Writer`, `Overview`, `ProductionCode`, `lastupdated`, `flagged`, `seriesid`, `IMDB_ID` ) VALUES ( 1134, 28, 19, "Failure to Communicate", "2002-02-22", "|Charles Robinson|Denise Nicholas|Starling Victorian|", "|Leonard R. Garner Jr.|", "|Don Reo|Damon Wayans|", "Michael's parents come to visit him, but Michael is worried about the way they treat each other and how that is reflecting on his own children. After a disastrous attempt to fix things, Michael and Jay finally decide to let things the way they were. Meanwhile, Jay and Michael worry about Jr.'s rush to have sex and his new girlfriend. Note: This episode was originally intended to air in season one, but for unknown reasons, ABC pulled back to season 2 Episode 19. Which is why Jazz Raycole portrays Claire, making this episode her very final appearance in the series . ", "W706", "1342751498", "0", 70329, "" )19", "Failure to Communicate", "2002-02-22", "|Charles Robinson|Denise Nicholas|Starling Victorian|", "|Leonard R. Garner Jr.|", "|Don Reo|Damon Wayans|", "Michael's parents come to visit him, but Michael is worried about the way they treat each other and how that is reflecting on his own children. After a disastrous attempt to fix things, Michael and Jay finally decide to let things the way they were. Meanwhile, Jay and Michael worry about Jr.'s rush to have sex and his new girlfriend. Note: This episode was originally intended to air in season one, but for unknown reasons, ABC pulled back to season 2 Episode 19. Which is why Jazz Raycole portrays Claire, making this episode her very final appearance in the series . ", "W706", "1342751498", "0", "", "" )
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<Data time="1348954802"><Series><id>70327</id><time>1348511515</time></Series>
+<Series><id>70328</id><time>1344881051</time></Series>
+<Series><id>70329</id><time>1347459459</time></Series>
+<Series><id>70330</id><time>1332693138</time></Series>
+<Series><id>70331</id><time>1345648979</time></Series>
+<Series><id>257855</id><time>1337298688</time></Series>
+<Series><id>70333</id><time>1163101692</\time></Series>
+
+
+
+CREATE TABLE `tvseasons` (
+`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
+`seriesid` INT( 10 ) UNSIGNED NOT NULL ,
+`season` INT( 10 ) UNSIGNED NOT NULL ,
+PRIMARY KEY (  `id` )
+) ENGINE = INNODB;    
+    
+ALTER TABLE  `tvseasons` ADD UNIQUE `uniqueseason`(
+`seriesid` ,
+`season`
+);    
+    
+CREATE TABLE  `tvseries` (
+`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT ,
+`SeriesName` VARCHAR( 255 ) NOT NULL UNIQUE,
+`SeriesID` VARCHAR( 45 ) NULL DEFAULT NULL UNIQUE,
+`Status` VARCHAR( 100 ) NULL DEFAULT NULL ,
+`FirstAired` VARCHAR( 100 ) NULL DEFAULT NULL ,
+`Network` VARCHAR( 100 ) NULL DEFAULT NULL ,
+`NetworkID` INT( 10 ) NULL DEFAULT NULL ,
+`Runtime` VARCHAR( 100 ) NULL DEFAULT NULL ,
+`Genre` VARCHAR( 100 ) NULL DEFAULT NULL ,
+`Actors` TEXT NULL DEFAULT NULL ,
+`Overview` TEXT NULL DEFAULT NULL ,
+`Airs_DayOfWeek` VARCHAR( 45 ) NULL DEFAULT NULL ,
+`Airs_Time` VARCHAR( 45 ) NULL DEFAULT NULL ,
+PRIMARY KEY (  `id` )
+) ENGINE = INNODB;
+             
+ CREATE TABLE  `tvepisodes` (
+`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`seasonid` INT( 10 ) UNSIGNED NOT NULL DEFAULT  '0',
+`EpisodeNumber` INT( 10 ) UNSIGNED NOT NULL DEFAULT  '0',
+`EpisodeName` VARCHAR( 255 ) NULL DEFAULT  '',
+`FirstAired` VARCHAR( 45 ) NULL DEFAULT NULL ,
+`GuestStars` TEXT NULL DEFAULT NULL ,
+`Director` TEXT NULL DEFAULT NULL ,
+`Writer` TEXT NULL DEFAULT NULL ,
+`Overview` TEXT NULL DEFAULT NULL ,
+`ProductionCode` VARCHAR( 45 ) NULL DEFAULT NULL ,
+`seriesID` INT( 10 ) NOT NULL ,
+INDEX (`seasonid`),
+INDEX (`FirstAired`) ,
+INDEX (`seriesID` )
+) ENGINE = INNODB;
