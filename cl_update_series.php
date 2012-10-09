@@ -17,17 +17,33 @@ $airs_day_of_week = "airs day of week";
 $airs_time = "airs time";
 
 
+function move_file(){
+    
+    global $filename;
+    global $fh;
+    print "filename = $filename\n";
+    $stringData = "rm $filename\n";
+    fwrite($fh, $stringData);
+    flush();
+    //exit -1;
+    
+
+}
+    
 function send_sql($db_conn, $sql_query){
     global $debug;
     $sql_return = $db_conn->query($sql_query);
-    printf("asdfSelect returned %d rows.\n", $sql_return->num_rows);   
+       
     if($debug > 0) {
         if($sql_return){
-            print "$sql_query\nquery successful\nreturn = $sql_return\n\n";
+            $sql_return = (string) $sql_return;
+            //print "$sql_query\nquery successful\nreturn = $sql_return\n\n";
         }    
         else {
+            $sql_return = (string) $sql_return;
             print "$sql_query\nquery NOT successful\nreturn = $sql_return\n\n";
-        
+            move_file();
+            //exit -1;
         }
             
     }
@@ -111,14 +127,23 @@ function connect_tvdb(){
 function load_file_into_xml($filename){
     $xml_filename = "series_xml/$filename";
     $dom = simplexml_load_file($xml_filename);
+    //print "dom = $dom\n dom =\n";
+    //print_r($dom);
+    if(empty($dom)){
+        print "DOM IS EMPTY\n";
+        move_file();
+        //exit -2;
+    }
     return $dom;
 }
 
 function make_not_null($xml){
     if(is_xml_empty_field($xml))
         $return_val = "\"\"";
-    else
-        $return_val = "\"$xml\"";
+    else {
+        $temp = mysql_escape_string((string)$xml);
+        $return_val = "\"$temp\"";
+    }
     return $return_val;
 }
 
@@ -174,7 +199,7 @@ function extract_episode_variables($dom){
 
 function check_insert_season($db_conn, $series_id, $season_number, $seasonid){
     $sql_query = "SELECT `id` FROM `tvseasons` WHERE `tvseasons`.`seriesid` = $series_id AND `tvseasons`.`season` = $season_number";
-    print "sql query = $sql_query\n";
+//    print "sql query = $sql_query\n";
     $return = $db_conn->query($sql_query);
     
     //print "return from select = $return\n";
@@ -194,14 +219,14 @@ function check_insert_season($db_conn, $series_id, $season_number, $seasonid){
         $return = $db_conn->query($sql_query);
         $row = mysqli_fetch_assoc($return);
         $id = $row['id'];
-        print "id = $id\n";
+//        print "id = $id\n";
         return $id;
     
 }
 
 function insert_episode($db_conn, $episode_id, $series_id, $seasonid, $episode_number, $episode_name, $first_aired, $guest_stars, $director, $writer, $overview, $production_code, $season_number){
     
-    print "insert episode\n";
+    print "insert episode $series_id $episode_id\n";
     check_insert_season($db_conn, $series_id, $season_number, $seasonid);
     $sql_query = "INSERT INTO `tvepisodes`
             (`id`, `seasonid`, `EpisodeNumber`, `EpisodeName`, `FirstAired`,
@@ -212,10 +237,11 @@ function insert_episode($db_conn, $episode_id, $series_id, $seasonid, $episode_n
              $guest_stars, $director, $writer, $overview, $production_code, 
              $season_number, $series_id)";
     
-    print "sql_query = $sql_query\n";
+ //   print "sql_query = $sql_query\n";
     
     
-    $return = $db_conn->query($sql_query);
+    //$return = $db_conn->query($sql_query);
+    send_sql($db_conn, $sql_query);
 }
 
 
@@ -230,7 +256,7 @@ function insert_series($db_conn, $series_id, $series_name, $status, $first_aired
     $runtime, $genre, $actors, $overview, $airs_day_of_week, 
     $airs_time)";
     
-    send_sql($db_conn, $sql_query);
+    return send_sql($db_conn, $sql_query);
     
 }
 
@@ -242,19 +268,76 @@ $db_conn = connect_tvdb();
 $ret = 
 print "returns $ret\n";
 
-$id_number = "70327.xml";
-$dom = load_file_into_xml($id_number);
+
+if ($handle = opendir('series_xml/')) {
+    echo "Directory handle: $handle\n";
+    echo "Entries:\n";
+$entry = readdir($handle);
+$entry = readdir($handle);
+
+$debug = 1;
+$full =1;
+
+$myFile = "testFile.txt";
+$fh = fopen($myFile, 'w');
+
+if($full){
+    while (false !== ($entry = readdir($handle))) {
+            echo "$entry\n";
+
+
+
+
+
+
+    $filename = "$entry";
+    print "filename = $filename";
+    //$dom = load_file_into_xml($filename);
+    
+    $xml_filename = "series_xml/$filename";
+    $dom = simplexml_load_file($xml_filename);
+    //print "dom = $dom\n dom =\n";
+    //print_r($dom);
+    if(empty($dom)){
+        print "DOM IS EMPTY\n";
+        move_file();
+        goto next_file;
+    }
+    
+    reset_series_variables();
+    extract_series_variables($dom);
+    insert_series($db_conn, $series_id, $series_name, $status, $first_aired, $network, $network_id, $runtime, $genre, $actors, $overview, $airs_day_of_week, $airs_time, $imdb_id);
+    foreach($dom->Episode as $episode):
+    //    print "-----------------inserting episode------------------";
+        reset_episode_variables();
+        reset_season_variables();
+        extract_episode_variables($episode);
+        insert_episode($db_conn, $episode_id, $series_id, $seasonid, $episode_number, $episode_name, $first_aired, $guest_stars, $director, $writer, $overview, $production_code, $season_number);
+    endforeach;
+    next_file:
+        print "skipped file $filename\n";
+    
+        }
+}
+else {
+
+$debug = 1;
+$filename = "188151.xml";    
+$dom = load_file_into_xml($filename);
 reset_series_variables();
 extract_series_variables($dom);
-insert_series($db_conn, $series_id, $series_name, $status, $first_aired, $network, $network_id, $runtime, $genre, $actors, $overview, $airs_day_of_week, $airs_time, $imdb_id);
-foreach($dom->Episode as $episode):
-    print "-----------------inserting episode------------------";
-    reset_episode_variables();
-    reset_season_variables();
-    extract_episode_variables($episode);
-    insert_episode($db_conn, $episode_id, $series_id, $seasonid, $episode_number, $episode_name, $first_aired, $guest_stars, $director, $writer, $overview, $production_code, $season_number);
-endforeach;
+$return = insert_series($db_conn, $series_id, $series_name, $status, $first_aired, $network, $network_id, $runtime, $genre, $actors, $overview, $airs_day_of_week, $airs_time, $imdb_id);
+}
+print "return of insert series\n";
+print_r($return);
+print "\n";
+
+closedir($handle);
+
+}
 
 
-
+    
+    
+    
 ?>
