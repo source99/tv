@@ -1,0 +1,53 @@
+Goals: 
+1.  Show when the first episode of an upcoming season 
+2.  Show when the next new episode of an in-process season
+3.  Allow the user to select from a list of similar named shows to reach goal 1 or 2.  
+
+
+Goal 1:
+check if series_name = query.
+check if series is not ended
+check if we are in the middle of a season - return next live episode and
+return the premiere date for the next upcoming season.  If more than one season return the closer date
+
+
+Goal 2:
+check if series_name = query
+check if series is not ended
+check if we are in the middle of a season
+get all dates for current season - return list of episodes that have not aired yet for this season
+return the premiere date for the next upcoming season.  
+
+
+Goal 3:
+Check for an exact match of a non-ended show -> go to goal 1/2
+else
+return list of like with wildcards of non-ended shows.  
+else
+put box to automatically email me if they can't find the show they are looking for
+
+
+search for exact match and not ended
+search for like match and not ended
+
+
+display upcoming episode info of exact match
+
+display list of other possible matches with info
+
+link to show premiere dates of previous seasons
+
+
+is it exact match
+is it not ended
+are we in the middle of a season?
+show next few airing schedule
+when does next season begin
+show premiere date for next season
+
+
+display where we are in the current season.
+
+
+
+
